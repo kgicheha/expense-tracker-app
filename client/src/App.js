@@ -2,29 +2,39 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const App = () => {
-  // const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   const [newExpense, setNewExpense] = useState({ description: '', amount: '', date: '' });
 
-  // useEffect(() => {
-  //   fetchExpenses();
-  // }, []);
+  useEffect(() => {
+    fetchExpenses();
+  }, []);
 
-  // const fetchExpenses = async () => {
-  //   const response = await axios.get('http://localhost:3000/expenses');
-  //   setExpenses(response.data);
-  // };
+  const fetchExpenses = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/expenses')
+      console.log(response.data)
+      setExpenses(response.data)
 
-  // const addExpense = async () => {
-  //   await axios.post('http://localhost:3000/expenses', newExpense);
-  //   setNewExpense({ description: '', amount: '', date: '' });
-  //   fetchExpenses();
-  // };
+    } catch (error) {
+      console.error('Error fetching expenses:', error);
+      // Handle errors as needed
+    }
+  };
 
-  let expenses = [{
-    "description": "Meternet",
-    "amount": "$150",
-    "date": "2021-07-06"
-  }]
+
+  const addExpense = async () => {
+    await axios.post('http://localhost:3000/expenses', newExpense);
+    setNewExpense({ description: '', amount: '', date: '' });
+    fetchExpenses();
+  };
+
+  // http://localhost:3000/expenses
+
+  // let expenses = [{
+  //   "description": "Meternet",
+  //   "amount": "$150",
+  //   "date": "2021-07-06"
+  // }]
 
   return (
     <div>
@@ -59,7 +69,7 @@ const App = () => {
           value={newExpense.date}
           onChange={(e) => setNewExpense({ ...newExpense, date: e.target.value })}
         />
-        {/* <button onClick={addExpense}>Add Expense</button> */}
+        <button onClick={addExpense}>Add Expense</button>
       </div>
     </div>
   );

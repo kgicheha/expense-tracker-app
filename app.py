@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///expenses.sqlite'
 db = SQLAlchemy(app)
 
 class Expense(db.Model):
@@ -14,9 +14,22 @@ class Expense(db.Model):
 
 @app.route('/expenses', methods=['GET', 'POST'])
 def expenses():
+
     if request.method == 'GET':
         expenses = Expense.query.all()
-        return jsonify([expense.__dict__ for expense in expenses])
+        return jsonify([
+        {
+            "description": "Meternet",
+            "amount": 150.00,
+            "date": "2021-07-06"
+        },
+        {
+            "description": "SMUD",
+            "amount": 100.00,
+            "date": "2021-07-06"
+        },
+    ])
+        # return jsonify([expense.__dict__ for expense in expenses])
 
     if request.method == 'POST':
         data = request.get_json()
@@ -29,6 +42,6 @@ def expenses():
         db.session.commit()
         return jsonify({'message': 'Expense added successfully'})
 
-if __name__ == '__main__':
+with app.app_context():
     db.create_all()
     app.run(debug=True)
