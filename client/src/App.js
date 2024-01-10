@@ -28,13 +28,6 @@ const App = () => {
     fetchExpenses();
   };
 
-  // http://localhost:3000/expenses
-
-  // let expenses = [{
-  //   "description": "Meternet",
-  //   "amount": "$150",
-  //   "date": "2021-07-06"
-  // }]
 
   return (
     <div>
