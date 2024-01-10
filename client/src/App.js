@@ -11,7 +11,7 @@ const App = () => {
 
   const fetchExpenses = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/expenses')
+      const response = await axios.get('/expenses')
       console.log(response.data)
       setExpenses(response.data)
 
@@ -23,7 +23,7 @@ const App = () => {
 
 
   const addExpense = async () => {
-    await axios.post('http://localhost:3000/expenses', newExpense);
+    await axios.post('/expenses', newExpense);
     setNewExpense({ description: '', amount: '', date: '' });
     fetchExpenses();
   };
