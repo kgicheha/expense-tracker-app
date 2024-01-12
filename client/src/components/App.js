@@ -63,17 +63,11 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/overview" element={<Overview />}></Route>
-            <Route path="/history" element={<TransactionHistory />}></Route>
+            <Route path="/history" element={<TransactionHistory expenses={expenses}/>}></Route>
             <Route path="/newexpenses" element={<NewExpenses />}></Route>
           </Routes>
         </BrowserRouter>
-        <ul>
-          {expenses.map((expense) => (
-            <li key={expense.id}>
-              {expense.description} - ${expense.amount} - {expense.date}
-            </li>
-          ))}
-        </ul>
+
       </div>
       <div>
         <h2>Add Expense</h2>
