@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter} from "react-router-dom";
+import { Route, Routes } from "react-router";
 import { Tabs, Tab, Box } from "@mui/material";
 import TransactionHistory from "./TransactionHistory";
+import Overview from "./Overview";
+import NewExpenses from "./NewExpenses";
 import axios from "axios";
 
 const App = () => {
@@ -41,19 +45,28 @@ const App = () => {
     <div>
       <h1>Expense Tracker</h1>
       <div>
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
           <Tabs
             value={value}
             onChange={handleChange}
             textColor="secondary"
             indicatorColor="secondary"
             aria-label="secondary tabs example"
+            centered
           >
-            <Tab value="one" label="Spending Overview" />
-            <Tab value="two" label="Transaction History" />
-            <Tab value="three" label="Add New Expenses" />
+            <Tab value="one" label="Spending Overview" href="/overview" />
+            <Tab value="two" label="Transaction History" href="/history" />
+            <Tab value="three" label="Add New Expenses" href="/newexpenses" />
           </Tabs>
         </Box>
+
+        <BrowserRouter>
+          <Routes>
+            <Route path="/overview" element={<Overview />}></Route>
+            <Route path="/history" element={<TransactionHistory />}></Route>
+            <Route path="/newexpenses" element={<NewExpenses />}></Route>
+          </Routes>
+        </BrowserRouter>
         <ul>
           {expenses.map((expense) => (
             <li key={expense.id}>
