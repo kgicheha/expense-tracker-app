@@ -9,6 +9,7 @@ import axios from "axios";
 
 const App = () => {
   const [value, setValue] = React.useState("one");
+  const [searchWord, setSearchWord] = useState("");
 
   const [expenses, setExpenses] = useState([]);
   const [newExpense, setNewExpense] = useState({
@@ -41,6 +42,18 @@ const App = () => {
     fetchExpenses();
   };
 
+  //search functionality
+  // eslint-disable-next-line
+  const SearchTerm = expenses.filter((expense) => {
+    if (searchWord === "") return true;
+    else if (
+      expense.first_name.toLowerCase().includes(searchWord.toLowerCase())
+
+    ) {
+      return true;
+    }
+  });
+
   return (
     <div>
       <h1>Expense Tracker</h1>
@@ -54,7 +67,7 @@ const App = () => {
             aria-label="secondary tabs example"
             centered
           >
-            <Tab value="one" label="Spending Overview" href="/overview" />
+            <Tab value="one" label="Spending Overview" href="/" />
             <Tab value="two" label="Transaction History" href="/history" />
             <Tab value="three" label="Add New Expenses" href="/newexpenses" />
           </Tabs>
@@ -62,8 +75,9 @@ const App = () => {
 
         <BrowserRouter>
           <Routes>
-            <Route path="/overview" element={<Overview />}></Route>
-            <Route path="/history" element={<TransactionHistory expenses={expenses}/>}></Route>
+            <Route path="/" element={<Overview />}></Route>
+            <Route path="/history" element={<TransactionHistory expenses={expenses} setSearchWord={setSearchWord}
+              searchWord={searchWord}/>}></Route>
             <Route path="/newexpenses" element={<NewExpenses />}></Route>
           </Routes>
         </BrowserRouter>

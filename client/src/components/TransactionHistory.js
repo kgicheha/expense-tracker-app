@@ -9,9 +9,18 @@ import {
   Paper,
   tableCellClasses,
   styled,
+  Container,
+  TextField,
+  InputAdornment,
 } from "@mui/material/";
+import SearchIcon from "@mui/icons-material/Search";
 
-function TransactionHistory({ expenses }) {
+function TransactionHistory({ expenses, searchWord, setSearchWord }) {
+  const handleChange = (e) => {
+    e.preventDefault();
+    setSearchWord(e.target.value);
+  };
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -31,8 +40,27 @@ function TransactionHistory({ expenses }) {
       border: 0,
     },
   }));
+
   return (
     <>
+      <Container>
+        <form style={{ minWidth: 300, marginTop: "40px" }}>
+          <TextField
+            id="input-with-icon-textfield"
+            variant="outlined"
+            fullWidth
+            // onChange={handleChange}
+            placeholder="Search by description ..."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </form>
+      </Container>
       <TableContainer component={Paper} sx={{ marginTop: "40px" }}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
