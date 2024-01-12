@@ -83,34 +83,6 @@ const App = () => {
         </BrowserRouter>
 
       </div>
-      <div>
-        <h2>Add Expense</h2>
-        <input
-          type="text"
-          placeholder="Description"
-          value={newExpense.description}
-          onChange={(e) =>
-            setNewExpense({ ...newExpense, description: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Amount"
-          value={newExpense.amount}
-          onChange={(e) =>
-            setNewExpense({ ...newExpense, amount: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Date"
-          value={newExpense.date}
-          onChange={(e) =>
-            setNewExpense({ ...newExpense, date: e.target.value })
-          }
-        />
-        <button onClick={addExpense}>Add Expense</button>
-      </div>
     </div>
   );
 };
