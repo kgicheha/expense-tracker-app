@@ -66,7 +66,6 @@ function NewExpenses() {
     setEditedId(editVal.id);
     setDescription(editArray[0]);
     setCost(slicedCost);
-    // setInputVal(editVal.val);
     setNewExpense(newnewExpense);
     setIsEdited(true);
   };
@@ -132,7 +131,7 @@ function NewExpenses() {
 
       <Button
         size="large"
-        variant={isEdited ? "outlined" : "contained"}
+        variant={isEdited ? "contained" : "contained"}
         color="primary"
         onClick={handleClick}
         className={classes.addButton}
