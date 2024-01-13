@@ -140,9 +140,13 @@ function NewExpenses() {
         {isEdited ? "Edit Expense" : "Add Expense"}
       </Button>
 
-      <Typography variant="h4" component="h4">
-        Monthly Expenses
-      </Typography>
+      {newExpense.length === 0 ? (
+        " "
+      ) : (
+        <Typography variant="h4" component="h4">
+          Monthly Expenses
+        </Typography>
+      )}
       <List>
         {newExpense.map((exp) => {
           return (
