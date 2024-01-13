@@ -3,7 +3,6 @@ import {
   TextField,
   Button,
   Typography,
-  Checkbox,
   List,
   ListItem,
   Container,
@@ -20,22 +19,17 @@ function NewExpenses() {
   const [cost, setCost] = useState("");
   const [date, setDate] = useState("");
 
-  const [inputVal, setInputVal] = useState("");
   const [newExpense, setNewExpense] = useState([]);
   const [isEdited, setIsEdited] = useState(false);
   const [editedId, setEditedId] = useState(null);
 
-  const onChange = (e) => {
-    setInputVal(e.target.value);
-  };
-
   const handleClick = () => {
+    let d = new Date(date).toLocaleDateString("en-US");
     if (!isEdited) {
-      let d = new Date(date).toLocaleDateString("en-US");
       setNewExpense([
         ...newExpense,
         {
-          val: description + "   " + "$" + cost + ".00" + "   " + d,
+          val: description + " " + "$" + cost + " " + d,
           isDone: false,
           id: new Date().getTime(),
         },
@@ -43,10 +37,13 @@ function NewExpenses() {
     } else {
       setNewExpense([
         ...newExpense,
-        { val: inputVal, isDone: false, id: editedId },
+        {
+          val: description + " " + "$" + cost + " " + d,
+          isDone: false,
+          id: editedId,
+        },
       ]);
     }
-    setInputVal("");
     setDescription("");
     setCost("");
     setDate("");
@@ -58,21 +55,18 @@ function NewExpenses() {
     setNewExpense(newnewExpense);
   };
 
-  const handleDone = (id) => {
-    const updated = newExpense.map((exp) => {
-      if (exp.id === id) {
-        exp.isDone = !exp.isDone;
-      }
-      return exp;
-    });
-    setNewExpense(updated);
-  };
-
   const handleEdit = (id) => {
     const newnewExpense = newExpense.filter((exp) => exp.id !== id);
     const editVal = newExpense.find((exp) => exp.id === id);
+
+    let editArray = editVal.val.split(" ");
+
+    let slicedCost = editArray[1].slice(1);
+
     setEditedId(editVal.id);
-    setInputVal(editVal.val);
+    setDescription(editArray[0]);
+    setCost(slicedCost);
+    // setInputVal(editVal.val);
     setNewExpense(newnewExpense);
     setIsEdited(true);
   };
@@ -144,36 +138,17 @@ function NewExpenses() {
         className={classes.addButton}
         disabled={description && cost && date ? false : true}
       >
-        {isEdited ? "Edit Task" : "Add Task"}
+        {isEdited ? "Edit Expense" : "Add Expense"}
       </Button>
 
-      {/* getting rid of */}
-      <TextField
-        variant="outlined"
-        onChange={onChange}
-        label="type your task"
-        value={inputVal}
-        className={classes.input}
-      />
-      <Button
-        size="large"
-        variant={isEdited ? "outlined" : "contained"}
-        color="primary"
-        onClick={handleClick}
-        className={classes.addButton}
-        disabled={inputVal ? false : true}
-      >
-        {isEdited ? "Edit Task" : "Add Task"}
-      </Button>
+      <Typography variant="h4" component="h4">
+        Monthly Expenses
+      </Typography>
       <List>
         {newExpense.map((exp) => {
           return (
             <>
               <ListItem divider="bool" className={classes.list}>
-                <Checkbox
-                  onClick={() => handleDone(exp.id)}
-                  checked={exp.isDone}
-                />
                 <Typography
                   className={classes.text}
                   style={{ color: exp.isDone ? "green" : "" }}
