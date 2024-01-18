@@ -50,6 +50,28 @@ function NewExpenses() {
     setIsEdited(false);
   };
 
+
+  const handlePostExpense = async () => {
+    try {
+      const newExpense = {
+        description,
+        amount: parseFloat(amount), // Assuming amount is a number
+        date,
+      };
+
+      // Make a POST request to your backend endpoint
+      await axios.post('/expenses', newExpense);
+
+      // Optionally, you can reset the form or update the expenses list
+      setNewExpense([])
+
+      console.log('Expense created successfully!');
+    } catch (error) {
+      console.error('Error creating expense:', error);
+      // Handle errors as needed
+    }
+  };
+
   const onDelete = (id) => {
     const newnewExpense = newExpense.filter((exp) => exp.id !== id);
     setNewExpense(newnewExpense);
