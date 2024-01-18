@@ -21,9 +21,7 @@ const App = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-
   };
-
 
   useEffect(() => {
     fetchExpenses();
@@ -38,12 +36,6 @@ const App = () => {
       console.error("Error fetching expenses:", error);
       // Handle errors as needed
     }
-  };
-
-  const addExpense = async () => {
-    await axios.post("/expenses", newExpense);
-    setNewExpense({ description: "", amount: "", date: "" });
-    fetchExpenses();
   };
 
   //search functionality
@@ -61,7 +53,7 @@ const App = () => {
     <div>
       <h1>Expense Tracker</h1>
       <div>
-      <TabsContainer setValue ={setValue} value = {value}/>
+        <TabsContainer setValue={setValue} value={value} />
         {/* <Box
           sx={{
             width: "100%",
@@ -85,7 +77,7 @@ const App = () => {
 
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Overview expenses ={expenses}/>}></Route>
+            <Route path="/" element={<Overview expenses={expenses} />}></Route>
             <Route
               path="/history"
               element={
