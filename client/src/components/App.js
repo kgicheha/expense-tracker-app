@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter} from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { Route, Routes } from "react-router";
 import { Tabs, Tab, Box } from "@mui/material";
 import TransactionHistory from "./TransactionHistory";
+import TabsContainer from "./TabsContainer";
 import Overview from "./Overview";
 import NewExpenses from "./NewExpenses";
 import axios from "axios";
 
 const App = () => {
-  const [value, setValue] = React.useState("one");
+  const [value, setValue] = useState("one");
   const [searchWord, setSearchWord] = useState("");
 
   const [expenses, setExpenses] = useState([]);
@@ -20,7 +21,10 @@ const App = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+
   };
+
+
   useEffect(() => {
     fetchExpenses();
   }, []);
@@ -48,7 +52,6 @@ const App = () => {
     if (searchWord === "") return true;
     else if (
       expense.first_name.toLowerCase().includes(searchWord.toLowerCase())
-
     ) {
       return true;
     }
@@ -58,7 +61,14 @@ const App = () => {
     <div>
       <h1>Expense Tracker</h1>
       <div>
-        <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+      <TabsContainer setValue ={setValue} value = {value}/>
+        {/* <Box
+          sx={{
+            width: "100%",
+            bgcolor: "background.paper",
+            marginBottom: "60px",
+          }}
+        >
           <Tabs
             value={value}
             onChange={handleChange}
@@ -71,17 +81,24 @@ const App = () => {
             <Tab value="two" label="Transaction History" href="/history" />
             <Tab value="three" label="Add New Expenses" href="/newexpenses" />
           </Tabs>
-        </Box>
+        </Box> */}
 
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Overview />}></Route>
-            <Route path="/history" element={<TransactionHistory expenses={expenses} setSearchWord={setSearchWord}
-              searchWord={searchWord}/>}></Route>
+            <Route path="/" element={<Overview expenses ={expenses}/>}></Route>
+            <Route
+              path="/history"
+              element={
+                <TransactionHistory
+                  expenses={expenses}
+                  setSearchWord={setSearchWord}
+                  searchWord={searchWord}
+                />
+              }
+            ></Route>
             <Route path="/newexpenses" element={<NewExpenses />}></Route>
           </Routes>
         </BrowserRouter>
-
       </div>
     </div>
   );

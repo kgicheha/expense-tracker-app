@@ -21,12 +21,17 @@ def expenses():
         {
             "description": "Meternet",
             "amount": 150.00,
-            "date": "2021-07-06"
+            "date": "2024-01-12"
         },
         {
             "description": "SMUD",
             "amount": 100.00,
-            "date": "2021-07-06"
+            "date": "2024-01-12"
+        },
+        {
+            "description": "SMUD",
+            "amount": 90.00,
+            "date": "2023-12-01"
         },
     ])
         # return jsonify([expense.__dict__ for expense in expenses])

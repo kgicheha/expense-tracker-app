@@ -147,6 +147,7 @@ function NewExpenses() {
           Monthly Expenses
         </Typography>
       )}
+
       <List>
         {newExpense.map((exp) => {
           return (
@@ -179,6 +180,11 @@ function NewExpenses() {
           );
         })}
       </List>
+      {newExpense.length === 0 ? (
+        " "
+      ) : (
+        <Button variant="contained" size="large">SUBMIT</Button>
+      )}
     </Container>
   );
 }

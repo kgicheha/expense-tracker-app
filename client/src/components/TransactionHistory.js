@@ -44,7 +44,7 @@ function TransactionHistory({ expenses, searchWord, setSearchWord }) {
   return (
     <>
       <Container>
-        <form style={{ minWidth: 300, marginTop: "40px" }}>
+        <form style={{ minWidth: 300 }}>
           <TextField
             id="input-with-icon-textfield"
             variant="outlined"
