@@ -28,7 +28,7 @@ function TabsContainer({setValue, value}) {
           href="/"
 
           />
-          <Tab value="two" label="Transaction History"
+          <Tab value="two" label="History"
           href="/history"
            />
           <Tab value="three" label="Add New Expenses"
