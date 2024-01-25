@@ -31,7 +31,6 @@ function Overview({ expenses }) {
     const previousYear = currentMonth === 1 ? currentYear - 1 : currentYear;
 
     return exps.filter((expense) => {
-
       const expenseDate = new Date(expense.date);
       const expenseMonth = expenseDate.getMonth() + 1; // Adding 1 since getMonth() returns 0-based month
       const expenseYear = expenseDate.getFullYear();
@@ -46,6 +45,28 @@ function Overview({ expenses }) {
 
   return (
     <>
+      <Paper
+        sx={{
+          p: 2,
+          margin: "auto",
+          maxWidth: 500,
+          flexGrow: 1,
+          backgroundColor: (theme) =>
+            theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12} lg container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs>
+                <Typography gutterBottom variant="h5" component="div">
+                  Budget: $800
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Paper>
       <Paper
         sx={{
           p: 2,

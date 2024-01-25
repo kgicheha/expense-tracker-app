@@ -24,8 +24,13 @@ function NewExpenses() {
   const [isEdited, setIsEdited] = useState(false);
   const [editedId, setEditedId] = useState(null);
 
+  const [totalCost, setTotalCost] = useState(0);
+
   const handleClick = () => {
     let d = new Date(date).toLocaleDateString("en-US");
+    setTotalCost(totalCost + parseFloat(cost));
+    console.log(totalCost);
+
     if (!isEdited) {
       setNewExpense([
         ...newExpense,
@@ -53,7 +58,7 @@ function NewExpenses() {
 
   const handlePostExpense = async () => {
     try {
-      console.log("I was clicked!")
+      console.log("I was clicked!");
       // Make a POST request to your backend endpoint
       await axios.post("/expenses", newExpense);
 
@@ -70,6 +75,13 @@ function NewExpenses() {
   const onDelete = (id) => {
     const newnewExpense = newExpense.filter((exp) => exp.id !== id);
     setNewExpense(newnewExpense);
+
+    const deletedVal = newExpense.find((exp) => exp.id === id);
+    let deletedArray = deletedVal.val.split(" ");
+
+    let slicedCost = deletedArray[1].slice(1);
+
+    setTotalCost(totalCost - slicedCost);
   };
 
   const handleEdit = (id) => {
@@ -85,6 +97,7 @@ function NewExpenses() {
     setCost(slicedCost);
     setNewExpense(newnewExpense);
     setIsEdited(true);
+    setTotalCost(totalCost - slicedCost);
   };
 
   const useStyles = styled({
@@ -160,49 +173,57 @@ function NewExpenses() {
       {newExpense.length === 0 ? (
         " "
       ) : (
-        <Typography variant="h4" component="h4">
-          Monthly Expenses
-        </Typography>
-      )}
+        <>
+          <Typography variant="h4" component="h4">
+            Monthly Expenses
+          </Typography>
 
-      <List>
-        {newExpense.map((exp) => {
-          return (
-            <>
-              <ListItem divider="bool" className={classes.list}>
-                <Typography
-                  className={classes.text}
-                  style={{ color: exp.isDone ? "green" : "" }}
-                  key={exp.id}
-                >
-                  {exp.val}
-                </Typography>
-                <Button
-                  onClick={() => handleEdit(exp.id)}
-                  variant="contained"
-                  className={classes.listButtons}
-                >
-                  Edit
-                </Button>
-                <Button
-                  onClick={() => onDelete(exp.id)}
-                  color="secondary"
-                  variant="contained"
-                  className={classes.listButtons}
-                >
-                  delete
-                </Button>
-              </ListItem>
-            </>
-          );
-        })}
-      </List>
-      {newExpense.length === 0 ? (
-        " "
-      ) : (
-        <Button variant="contained" size="large" onClick={handlePostExpense}>
-          SUBMIT
-        </Button>
+          <List>
+            {newExpense.map((exp) => {
+              return (
+                <>
+                  <ListItem divider="bool" className={classes.list}>
+                    <Typography
+                      className={classes.text}
+                      style={{ color: exp.isDone ? "green" : "" }}
+                      key={exp.id}
+                    >
+                      {exp.val}
+                    </Typography>
+                    <Button
+                      onClick={() => handleEdit(exp.id)}
+                      variant="contained"
+                      className={classes.listButtons}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      onClick={() => onDelete(exp.id)}
+                      color="secondary"
+                      variant="contained"
+                      className={classes.listButtons}
+                    >
+                      delete
+                    </Button>
+                  </ListItem>
+                </>
+              );
+            })}
+          </List>
+
+          <>
+            <Typography variant="h4" component="h4">
+              Total Cost: ${totalCost}
+            </Typography>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={handlePostExpense}
+            >
+              SUBMIT
+            </Button>
+          </>
+        </>
       )}
     </Container>
   );
